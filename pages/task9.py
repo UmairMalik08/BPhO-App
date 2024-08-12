@@ -202,7 +202,7 @@ def task9():
             y=alt.Y(
                 "y(m)",
                 scale=alt.Scale(
-                    domain=(-0.1, (max(source9II["y(m)"] * 1.1))), clamp=True
+                    domain=(-0.1, (max(source9II["vx(m/s)"] * 1.1))), clamp=True
                 ),
             ),
             color="Trajectory:N",
