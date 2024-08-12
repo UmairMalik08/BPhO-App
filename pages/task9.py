@@ -200,9 +200,9 @@ def task9():
         alt.Chart(source9II)
         .mark_line()
         .encode(
-            x="x(m)",
+            x="time(s)",
             y=alt.Y(
-                "y(m)",
+                "vx(m/s)",
                 scale=alt.Scale(
                     domain=(-0.1, (max(source9II["vx(m/s)"] * 1.1))), clamp=True
                 ),
