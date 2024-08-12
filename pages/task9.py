@@ -87,6 +87,8 @@ def task9():
         time_list = time_list[: n + 1]
         x_list = x_list[: n + 1]
         y_list = y_list[: n + 1]
+        vx_list = vx_list[: n + 1]
+        vy_list = vy_list[: n + 1]
 
         return (
             time_list,
@@ -183,7 +185,7 @@ def task9():
     )
 
     source9AII = DataFrame(
-        {"time(s)": t, "vx(m/s)": vx, "Trajectory": ["No air resistance"] * len(x)}
+        {"time(s)": t, "vx(m/s)": vx, "Trajectory": ["No air resistance"] * len(t)}
     )
     source9BII = DataFrame(
         {
