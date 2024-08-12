@@ -88,7 +88,13 @@ def task9():
         x_list = x_list[: n + 1]
         y_list = y_list[: n + 1]
 
-        return x_list, y_list
+        return (
+            time_list,
+            x_list,
+            y_list,
+            vx_list,
+            vy_list,
+        )
 
     col1, col2 = st.columns(2)
 
@@ -127,11 +133,17 @@ def task9():
         2 * object_mass
     )
 
-    x, y = verlet_trajectory_solver(
+    t, x, y, vx, vy = verlet_trajectory_solver(
         gravity, time_step, launch_height, launch_angle, launch_speed, 0
     )
 
-    x_air_resistance, y_air_resistance = verlet_trajectory_solver(
+    (
+        t_air_resistance,
+        x_air_resistance,
+        y_air_resistance,
+        vx_air_resistance,
+        vy_air_resistance,
+    ) = verlet_trajectory_solver(
         gravity,
         time_step,
         launch_height,
@@ -151,17 +163,17 @@ def task9():
         }
     )
 
-    source9 = concat([source9A, source9B])
+    source9I = concat([source9A, source9B])
 
-    chart9 = (
-        alt.Chart(source9)
+    chart9I = (
+        alt.Chart(source9I)
         .mark_line()
         .encode(
             x="x(m)",
             y=alt.Y(
                 "y(m)",
                 scale=alt.Scale(
-                    domain=(-0.1, (max(source9["y(m)"] * 1.1))), clamp=True
+                    domain=(-0.1, (max(source9I["y(m)"] * 1.1))), clamp=True
                 ),
             ),
             color="Trajectory:N",
@@ -170,4 +182,34 @@ def task9():
         .interactive()
     )
 
-    st.altair_chart(chart9, use_container_width=True)
+    source9AII = DataFrame(
+        {"time(s)": t, "vx(m/s)": vx, "Trajectory": ["No air resistance"] * len(x)}
+    )
+    source9BII = DataFrame(
+        {
+            "time(s)": t_air_resistance,
+            "vx(m/s)": vx_air_resistance,
+            "Trajectory": ["Air resistance"] * len(t_air_resistance),
+        }
+    )
+    source9II = concat([source9AII, source9BII])
+
+    chart9II = (
+        alt.Chart(source9II)
+        .mark_line()
+        .encode(
+            x="x(m)",
+            y=alt.Y(
+                "y(m)",
+                scale=alt.Scale(
+                    domain=(-0.1, (max(source9II["y(m)"] * 1.1))), clamp=True
+                ),
+            ),
+            color="Trajectory:N",
+        )
+        .properties(title="Task 9 - Air resistance model")
+        .interactive()
+    )
+
+    st.altair_chart(chart9I, use_container_width=True)
+    st.altair_chart(chart9II, use_container_width=True)
