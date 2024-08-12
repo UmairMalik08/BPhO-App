@@ -1,5 +1,6 @@
 import streamlit as st
 
+from pages.home import home
 from pages.task1 import task1
 from pages.task2 import task2
 from pages.task3 import task3
@@ -11,6 +12,7 @@ from pages.task8 import task8
 from pages.task9 import task9
 
 pages = {
+    "Home": home,
     "Task 1": task1,
     "Task 2": task2,
     "Task 3": task3,
